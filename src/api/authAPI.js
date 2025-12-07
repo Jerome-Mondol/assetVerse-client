@@ -17,7 +17,7 @@ export const createUserInDB = async (user) => {
     }
 } 
 
-export const getJWT = async (email) => {
+export const setJWT = async (email) => {
     if(!email){ 
         console.log("No user sent in database");
         return null
@@ -25,10 +25,12 @@ export const getJWT = async (email) => {
 
     try {
         const result = await axiosInstance.post(`/auth/login?email=${email}`);
-        if(result) return result?.data?.token;
+        const token = result?.data?.token;
+        localStorage.setItem('token', token);
     }
     catch(err) {
         console.log(err);
         return null;
     }
 }
+

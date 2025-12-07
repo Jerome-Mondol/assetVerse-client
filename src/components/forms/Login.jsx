@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../context/AuthContext';
-import { getJWT } from '../../api/authAPI';
+import { setJWT } from '../../api/authAPI';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -28,8 +28,7 @@ const Login = () => {
         
         try {
             const userCred = await login(email, password) 
-            const token = await getJWT(email)
-            console.log(token)
+            await setJWT(email)
             
             
         } catch (err) {
