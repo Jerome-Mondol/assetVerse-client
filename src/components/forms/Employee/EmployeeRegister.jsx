@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { useAuth } from '../../../context/AuthContext.jsx';
-import { createUserInDB } from '../../../api/userApi.js';
+import { createUserInDB } from '../../../api/authAPI.js';
 
 const EmployeeRegister = () => {
     // Simple state variables
