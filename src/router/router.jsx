@@ -1,9 +1,17 @@
 import { createBrowserRouter } from "react-router";
+import MainLayout from "./layouts/MainLayout";
+import EmployeeRegister from "../components/forms/EmployeeRegister";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1>hello</h1>
+    Component: MainLayout,
+    children: [
+      {
+        path: 'join-as-employee',
+        Component: EmployeeRegister
+      }
+    ]
   }
 ]);
 
