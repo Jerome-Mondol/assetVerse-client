@@ -17,6 +17,23 @@ export const createUserInDB = async (user) => {
     }
 } 
 
+export const createHRInDB = async (hrData) => {
+
+
+    if(!hrData) {
+        console.log("No user sent in database");
+        return null
+    }
+
+    try {
+        const result = axiosInstance.post('/auth/hr/register', hrData);
+        return result;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export const setJWT = async (email) => {
     if(!email){ 
         console.log("No user sent in database");
