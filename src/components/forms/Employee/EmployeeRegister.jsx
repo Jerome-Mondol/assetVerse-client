@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router';
+import { useAuth } from '../../../context/AuthContext.jsx';
+import { createUserInDB } from '../../../api/userApi.js';
 
 const EmployeeRegister = () => {
     // Simple state variables
@@ -9,9 +11,11 @@ const EmployeeRegister = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    
+
+    const { signUpWithEmailAndPassword } = useAuth();
+
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
         // Simple validation
@@ -25,18 +29,23 @@ const EmployeeRegister = () => {
             return;
         }
         
-        // Create employee data object
-        const employeeData = {
-            name: name,
-            email: email,
-            dateOfBirth: dob,
-            password: password,
-            role: 'employee'
-        };
-        
-        console.log('Employee Data:', employeeData);
-        // Here you would send data to backend
-        alert('Registration successful!');
+
+        try {
+            const userCredentials = await signUpWithEmailAndPassword(email, password);
+
+            const employeeData = {
+                name: name,
+                email: email,
+                dateOfBirth: dob,
+                firebaseUID: userCredentials.uid,
+            };
+
+            const userInDB = await createUserInDB(employeeData);    
+            console.log(userInDB)
+        }
+        catch(err) {
+            console.log(err);
+        }
     };
 
     return (
