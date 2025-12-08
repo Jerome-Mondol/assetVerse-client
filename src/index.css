@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Archivo:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 @import "tailwindcss";
 @plugin "daisyui";
 
@@ -38,4 +39,5 @@
 /* Smooth transitions */
 * {
   transition: background-color 0.2s ease, border-color 0.2s ease;
+  font-family: "Archivo";
 }

@@ -31,6 +31,8 @@ const HRRegister = () => {
         try {
             const userCredentials = await signUpWithEmailAndPassword(email, password);
 
+            if(userCredentials) {
+
             const hrData = {
                 name,
                 companyName,
@@ -42,6 +44,7 @@ const HRRegister = () => {
 
             const createdHR = await createHRInDB(hrData);
             console.log(createdHR);
+            }
         }
         catch (err) {
             console.log(err);
