@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../../context/AuthContext.jsx';
 import { createHRInDB } from '../../../api/authAPI.js';
 
@@ -12,6 +12,8 @@ const HRRegister = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    const navigate = useNavigate();
 
     const { signUpWithEmailAndPassword } = useAuth();
 
@@ -45,6 +47,8 @@ const HRRegister = () => {
             const createdHR = await createHRInDB(hrData);
             console.log(createdHR);
             }
+
+            navigate('/login')
         }
         catch (err) {
             console.log(err);
