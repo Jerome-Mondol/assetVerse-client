@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import BenefitCard from '../components/common/BenefitCard';
+import BenefitCard from '../components/HomeComponents/BenefitCard';
 
 const About = () => {
 

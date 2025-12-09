@@ -10,7 +10,7 @@ import {
     Bell,
     CheckCircle
 } from 'lucide-react';
-import FeaturesCard from '../components/common/FeaturesCard';
+import FeaturesCard from '../components/HomeComponents/FeaturesCard';
 
 const Features = () => {
     const features = [

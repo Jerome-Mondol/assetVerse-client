@@ -4,6 +4,9 @@ import EmployeeRegister from "../components/forms/Employee/EmployeeRegister";
 import Login from "../components/forms/Login";
 import HRRegister from "../components/forms/HR/HRRegister";
 import Home from "../pages/Home";
+import AssetList from "../pages/AssetList";
+import HRRoutes from "./HRRoutes";
+import AddAsset from "../pages/AddAsset";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +28,18 @@ const router = createBrowserRouter([
       {
         path: 'login',
         Component: Login
+      },
+      {
+        path: 'assets-list',
+        element: <HRRoutes>
+          <AssetList />
+        </HRRoutes>
+      },
+      {
+        path: "add-asset",
+        element: <HRRoutes>
+          <AddAsset />
+        </HRRoutes>
       }
     ]
   }
