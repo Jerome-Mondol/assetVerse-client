@@ -111,9 +111,9 @@ const Navbar = () => {
                                         {role === "employee" && (
                                             <>
                                                 <li className="border-b pb-1 mb-1"><span className="text-sm text-gray-500 font-bold">EMPLOYEE</span></li>
-                                                <li><Link to="/dashboard/my-assets" className="hover:bg-blue-50">📦 My Assets</Link></li>
-                                                <li><Link to="/dashboard/request-asset" className="hover:bg-blue-50">➕ Request Asset</Link></li>
-                                                <li><Link to="/dashboard/my-team" className="hover:bg-blue-50">👥 My Team</Link></li>
+                                                <li><Link to="/my-assets" className="hover:bg-blue-50">📦 My Assets</Link></li>
+                                                <li><Link to="/request-asset" className="hover:bg-blue-50">➕ Request Asset</Link></li>
+                                                <li><Link to="/my-team" className="hover:bg-blue-50">👥 My Team</Link></li>
                                                 <div className="divider my-1"></div>
                                             </>
                                         )}
@@ -125,8 +125,8 @@ const Navbar = () => {
                                                 <li><Link to="/assets-list" className="hover:bg-blue-50">📋 Asset List</Link></li>
                                                 <li><Link to="/add-asset" className="hover:bg-blue-50">➕ Add Asset</Link></li>
                                                 <li><Link to="/all-requests" className="hover:bg-blue-50">📝 All Requests</Link></li>
-                                                <li><Link to="/dashboard/employees" className="hover:bg-blue-50">👥 Employee List</Link></li>
-                                                <li><Link to="/dashboard/upgrade-package" className="hover:bg-blue-50">💎 Upgrade Package</Link></li>
+                                                <li><Link to="employees" className="hover:bg-blue-50">👥 Employee List</Link></li>
+                                                <li><Link to="/upgrade-package" className="hover:bg-blue-50">💎 Upgrade Package</Link></li>
                                                 <div className="divider my-1"></div>
                                             </>
                                         )}

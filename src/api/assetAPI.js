@@ -29,3 +29,13 @@ export const getAssetsOfEmployee = async (email) => {
         console.log(err);
     }
 }
+
+export const getAllAssets = async () => {
+    try {
+        const assets = await secureAxios.get(`/assets/get-all-assets`)
+        if(assets) return assets.data;
+    }
+    catch(err) {
+        console.log(err)
+    }
+}

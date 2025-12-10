@@ -9,6 +9,8 @@ import HRRoutes from "./HRRoutes";
 import AddAsset from "../pages/AddAsset";
 import EmployeeRoutes from "./EmployeeRoutes";
 import MyAssets from "../pages/MyAssets";
+import RequestAsset from "../pages/RequestAsset";
+import AssetDetails from "../pages/AssetDetails";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,18 @@ const router = createBrowserRouter([
         path: "my-assets",
         element: <EmployeeRoutes>
           <MyAssets />
+        </EmployeeRoutes>
+      },
+      {
+        path: 'request-asset',
+        element: <EmployeeRoutes>
+          <RequestAsset />
+        </EmployeeRoutes>
+      },
+      {
+        path: 'asset-details',
+        element: <EmployeeRoutes>
+            <AssetDetails />
         </EmployeeRoutes>
       }
     ]
