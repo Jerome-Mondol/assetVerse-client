@@ -123,8 +123,8 @@ const Navbar = () => {
                                             <>
                                                 <li className="border-b pb-1 mb-1"><span className="text-sm text-gray-500 font-bold">HR MANAGER</span></li>
                                                 <li><Link to="/assets-list" className="hover:bg-blue-50">📋 Asset List</Link></li>
-                                                <li><Link to="/dashboard/add-asset" className="hover:bg-blue-50">➕ Add Asset</Link></li>
-                                                <li><Link to="/dashboard/all-requests" className="hover:bg-blue-50">📝 All Requests</Link></li>
+                                                <li><Link to="/add-asset" className="hover:bg-blue-50">➕ Add Asset</Link></li>
+                                                <li><Link to="/all-requests" className="hover:bg-blue-50">📝 All Requests</Link></li>
                                                 <li><Link to="/dashboard/employees" className="hover:bg-blue-50">👥 Employee List</Link></li>
                                                 <li><Link to="/dashboard/upgrade-package" className="hover:bg-blue-50">💎 Upgrade Package</Link></li>
                                                 <div className="divider my-1"></div>
@@ -262,7 +262,7 @@ const Navbar = () => {
                                             <span>Asset List</span>
                                         </Link>
                                         <Link 
-                                            to="/dashboard/add-asset" 
+                                            to="add-asset" 
                                             onClick={() => setIsMenuOpen(false)}
                                             className="flex items-center gap-3 text-gray-700 font-medium hover:text-blue-600 hover:bg-blue-50 p-3 rounded-lg transition-colors"
                                         >

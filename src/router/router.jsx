@@ -7,6 +7,8 @@ import Home from "../pages/Home";
 import AssetList from "../pages/AssetList";
 import HRRoutes from "./HRRoutes";
 import AddAsset from "../pages/AddAsset";
+import EmployeeRoutes from "./EmployeeRoutes";
+import MyAssets from "../pages/MyAssets";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,12 @@ const router = createBrowserRouter([
         element: <HRRoutes>
           <AddAsset />
         </HRRoutes>
+      },
+      {
+        path: "my-assets",
+        element: <EmployeeRoutes>
+          <MyAssets />
+        </EmployeeRoutes>
       }
     ]
   }
