@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         </EmployeeRoutes>
       },
       {
-        path: 'asset-details',
+        path: 'asset-details/:id',
         element: <EmployeeRoutes>
             <AssetDetails />
         </EmployeeRoutes>

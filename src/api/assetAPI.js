@@ -39,3 +39,14 @@ export const getAllAssets = async () => {
         console.log(err)
     }
 }
+
+export const getSpecificAsset = async (id) => {
+    if(!id) console.log("No ID provided");
+    try {
+        const asset = await secureAxios.get(`/assets/asset?id=${id}`)
+        if(asset) return asset.data;
+    }
+    catch(err) {
+        console.log(err);
+    }
+}

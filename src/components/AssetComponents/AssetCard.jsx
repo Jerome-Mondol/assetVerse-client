@@ -18,7 +18,7 @@ const AssetCard = ({ assetImage, assetName, assetType, assetQuantity, id, role }
     <p className='text-gray-500' >Category: {assetType}</p>
     <p className={assetQuantity <= 0 ? "text-gray-500 bg-red-500/50 w-fit px-2 py-1 rounded-lg" : "text-gray-500 bg-green-500/50 w-fit px-2 py-1 rounded-lg"}>{ assetQuantity <= 0 ? "Unavailable" : "Available" }</p>
     <div className="card-actions justify-end">
-      <button className="btn btn-primary w-full">{role === 'hr' ? "Edit" : "Request access"}</button>
+      <Link to={`/asset-details/${id}`}><h1 className="btn btn-primary w-full">{role === 'hr' ? "Edit" : "Request access"}</h1></Link>
     </div>
   </div>
 </div>    
