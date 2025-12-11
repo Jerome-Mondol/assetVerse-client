@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { acceptRequest, getAllRequestOfAHR } from '../api/requestAPI';
+import { acceptRequest, getAllRequestOfAHR, rejectRequest } from '../api/requestAPI';
 import { useAuth } from '../context/AuthContext';
 
 const AllRequests = () => {
@@ -25,6 +25,7 @@ const AllRequests = () => {
         fetchRequests();
     }, [user]);
 
+    
     return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-6">
             <div className="max-w-6xl mx-auto">
@@ -72,16 +73,12 @@ const AllRequests = () => {
                                                 </div>
                                             </td>
                                             <td className="py-4 px-6">
-                                                <div className="text-gray-900">{user?.name || user?.email}</div>
-                                                <div className="text-sm text-gray-500">Employee</div>
+                                                <div className="text-gray-900">{request.requesterEmail}</div>
                                             </td>
-                                            <td className="py-4 px-6">
-                                                <div className="text-gray-900">
-                                                    {new Date().toLocaleDateString()}
-                                                </div>
-                                                <div className="text-sm text-gray-500">
-                                                    {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                                                </div>
+                                            <td className="py-4 px-6 text-gray-500">
+                                                {
+                                                    request ? new Date(request.requestDate).toLocaleDateString() : "N/A"
+                                                }
                                             </td>
                                             <td className="py-4 px-6">
                                                 <span className="inline-flex px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
@@ -91,7 +88,7 @@ const AllRequests = () => {
                                             <td className="py-4 px-6">
                                                 <div className="flex space-x-2">
                                                     {
-                                                        request.requestStatus !== "approved" ?
+                                                        request.requestStatus !== "approved" &&  request.requestStatus !== "rejected"?
                                                         <>
                                                         <button 
                                                     onClick={async (e) => {
@@ -104,6 +101,10 @@ const AllRequests = () => {
                                                         Accept
                                                     </button>
                                                     <button 
+                                                        onClick={async () => {
+                                                            const response = await rejectRequest(request._id);
+                                                            if(response) console.log(response);
+                                                        }}
                                                         className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
                                                     >
                                                         Reject

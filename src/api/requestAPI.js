@@ -29,3 +29,14 @@ export const acceptRequest = async (id) => {
         console.log(err);
     }
 }
+
+
+export const rejectRequest = async (id) => {
+    try {
+        const response = await secureAxios.patch(`/request/${id}/reject`)
+        if(response) return response.data;
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
