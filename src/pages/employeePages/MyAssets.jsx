@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { getUser } from '../../api/userAPI.js';
 import { getAssetsOfEmployee } from '../../api/assetAPI.js';
+import Swal from 'sweetalert2';
 
 const MyAssets = () => {
   const [assetList, setAssetList] = useState([]);
@@ -23,7 +24,8 @@ const MyAssets = () => {
           setAssetList(assetResponse || []);
           setFilteredAssets(assetResponse || []);
         } catch (err) {
-          console.log(err);
+          console.error(err);
+          Swal.fire('Error', 'Failed to load assets', 'error');
         }
       }
     };
@@ -143,7 +145,23 @@ const MyAssets = () => {
                       <td className="py-4 px-4">
                         {asset.assetType?.toLowerCase() === 'returnable' && 
                          asset.status?.toLowerCase() === 'assigned' ? (
-                          <button className="btn btn-error btn-sm">
+                          <button
+                            className="btn btn-error btn-sm"
+                            onClick={async () => {
+                              const should = window.confirm('Return this item?');
+                              if (!should) return;
+                              try {
+                                // call return endpoint
+                                await (await import('../../api/assignedAPI')).returnAssignedAsset(asset._id);
+                                // update local state
+                                setAssetList(prev => prev.map(a => a._id === asset._id ? { ...a, status: 'returned', returnDate: new Date().toISOString() } : a));
+                                setFilteredAssets(prev => prev.map(a => a._id === asset._id ? { ...a, status: 'returned', returnDate: new Date().toISOString() } : a));
+                              } catch (err) {
+                                console.error(err);
+                                Swal.fire('Error', 'Failed to process return', 'error');
+                              }
+                            }}
+                          >
                             Return
                           </button>
                         ) : (

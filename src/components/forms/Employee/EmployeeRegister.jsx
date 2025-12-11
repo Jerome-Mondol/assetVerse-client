@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { useAuth } from '../../../context/AuthContext.jsx';
 import { createUserInDB } from '../../../api/authAPI.js';
+import Swal from 'sweetalert2';
 
 const EmployeeRegister = () => {
     // Simple state variables
@@ -20,12 +21,12 @@ const EmployeeRegister = () => {
         
         // Simple validation
         if (!name || !email || !dob || !password) {
-            alert('Please fill in all fields');
+            Swal.fire('Error','Please fill in all fields','error');
             return;
         }
         
         if (password !== confirmPassword) {
-            alert('Passwords do not match');
+            Swal.fire('Error','Passwords do not match','error');
             return;
         }
         
@@ -40,11 +41,14 @@ const EmployeeRegister = () => {
                 firebaseUID: userCredentials.uid,
             };
 
-            const userInDB = await createUserInDB(employeeData);    
-            console.log(userInDB)
+            const userInDB = await createUserInDB(employeeData);
+            if (userInDB) {
+                Swal.fire('Success','Account created','success');
+            }
         }
         catch(err) {
-            console.log(err);
+            console.error(err);
+            Swal.fire('Error','Registration failed','error');
         }
     };
 

@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext'
 import { getSpecificAsset } from '../../api/assetAPI'
 import { useParams, useNavigate } from 'react-router'
 import { sendRequest } from '../../api/requestAPI'
+import Swal from 'sweetalert2'
 
 const AssetDetails = () => {
     const { user } = useAuth()
@@ -83,7 +84,7 @@ const AssetDetails = () => {
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div className="p-8">
                         <div className="flex flex-col md:flex-row md:items-start gap-8">
-                            <div className="flex-shrink-0">
+                            <div className="shrink-0">
                                 <div className="w-64 h-64 bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
                                     {productImage && productImage !== "N/A" ? (
                                         <img
@@ -185,9 +186,13 @@ const AssetDetails = () => {
                                     <div className="mt-8 flex gap-4">
                                         <button
                                             onClick={async (e) => {
-                                                e.preventDefault()
-                                                const request = await sendRequest(id)
-                                                console.log(request)
+                                                e.preventDefault();
+                                                const res = await sendRequest(id);
+                                                if (res) {
+                                                    Swal.fire('Success','Request sent','success');
+                                                } else {
+                                                    Swal.fire('Error','Request failed','error');
+                                                }
                                             }}
                                             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
                                         >

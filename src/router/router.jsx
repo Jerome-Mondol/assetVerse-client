@@ -13,6 +13,7 @@ import RequestAsset from "../pages/employeePages/RequestAsset";
 import AssetDetails from "../pages/commonPages/AssetDetails";
 import AllRequests from "../pages/hrPages/AllRequests";
 import AllEmployees from "../pages/hrPages/AllEmployees";
+import EditAsset from "../pages/hrPages/EditAsset";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,12 @@ const router = createBrowserRouter([
         path: "add-asset",
         element: <HRRoutes>
           <AddAsset />
+        </HRRoutes>
+      },
+      {
+        path: "edit-asset/:id",
+        element: <HRRoutes>
+          <EditAsset />
         </HRRoutes>
       },
       {
