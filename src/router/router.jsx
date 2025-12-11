@@ -11,6 +11,7 @@ import EmployeeRoutes from "./EmployeeRoutes";
 import MyAssets from "../pages/MyAssets";
 import RequestAsset from "../pages/RequestAsset";
 import AssetDetails from "../pages/AssetDetails";
+import AllRequests from "../pages/AllRequests";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,12 @@ const router = createBrowserRouter([
         element: <EmployeeRoutes>
             <AssetDetails />
         </EmployeeRoutes>
+      },
+      {
+        path: "all-requests",
+        element: <HRRoutes>
+          <AllRequests />
+        </HRRoutes>
       }
     ]
   }

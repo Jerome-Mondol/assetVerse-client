@@ -39,9 +39,7 @@ const AssetList = () => {
           {
             assetList &&
               assetList.map(({ productName, productImage, productType, productQuantity, _id }, index) => (
-                <>
-                  <AssetCard assetImage={productImage} assetName={productName} assetType={productType} assetQuantity={productQuantity} key={index} id={_id} role={userRole}/>
-                </>
+                  <AssetCard key={index} assetImage={productImage} assetName={productName} assetType={productType} assetQuantity={productQuantity} id={_id} role={userRole}/>
               ))
           }
         </div>
