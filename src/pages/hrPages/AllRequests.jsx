@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { acceptRequest, getAllRequestOfAHR, rejectRequest } from '../api/requestAPI';
-import { useAuth } from '../context/AuthContext';
+import { acceptRequest, getAllRequestOfAHR, rejectRequest } from '../../api/requestAPI';
+import { useAuth } from '../../context/AuthContext';
 
 const AllRequests = () => {
     const [requests, setRequests] = useState([]);

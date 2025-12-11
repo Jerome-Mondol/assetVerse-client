@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import AssetCard from '../components/AssetComponents/AssetCard'
-import { useAuth } from '../context/AuthContext'
-import { getUser } from '../api/userAPI'
-import { getAllAssets, getAssetsOfEmployee } from '../api/assetAPI'
+import AssetCard from '../../components/AssetComponents/AssetCard'
+import { useAuth } from '../../context/AuthContext'
+import { getUser } from '../../api/userAPI'
+import { getAllAssets, getAssetsOfEmployee } from '../../api/assetAPI'
 
 const RequestAsset = () => {
   const [assetList, setAssetList] = useState(null);

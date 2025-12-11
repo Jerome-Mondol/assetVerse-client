@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getAssets, addAsset } from "../api/assetAPI.js";
-import { useAuth } from "../context/AuthContext";
+import { getAssets, addAsset } from "../../api/assetAPI.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 import { toast } from "react-toastify";
 
 const AddAsset = () => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext'
-import { getSpecificAsset } from '../api/assetAPI'
+import { useAuth } from '../../context/AuthContext'
+import { getSpecificAsset } from '../../api/assetAPI'
 import { useParams, useNavigate } from 'react-router'
-import { sendRequest } from '../api/requestAPI'
+import { sendRequest } from '../../api/requestAPI'
 
 const AssetDetails = () => {
     const { user } = useAuth()
