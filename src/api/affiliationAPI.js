@@ -9,3 +9,13 @@ export const getAffiliations = async (hrEmail) => {
         console.log(err);
     }
 }
+
+export const removeAffiliation = async (id) => {
+    try {
+        const response = await secureAxios.patch(`/affiliations/remove?id=${id}`);
+        if(response) return response.data;
+    }
+    catch(err) {
+        console.log(err);
+    }
+}

@@ -9,11 +9,11 @@ const AllRequests = () => {
 
     useEffect(() => {
         const fetchRequests = async () => {
-            if(user) {
+            if (user) {
                 setLoading(true);
                 try {
                     const requestData = await getAllRequestOfAHR(user.email);
-                    if(requestData) setRequests(requestData);
+                    if (requestData) setRequests(requestData);
                 } catch (error) {
                     console.error("Error fetching requests:", error);
                 } finally {
@@ -25,12 +25,12 @@ const AllRequests = () => {
         fetchRequests();
     }, [user]);
 
-    
+
     return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-6">
             <div className="max-w-6xl mx-auto">
                 <h1 className='text-3xl font-bold text-gray-800 mb-8'>All Requests</h1>
-                
+
                 {loading ? (
                     <div className="flex justify-center items-center h-64">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -88,34 +88,53 @@ const AllRequests = () => {
                                             <td className="py-4 px-6">
                                                 <div className="flex space-x-2">
                                                     {
-                                                        request.requestStatus !== "approved" &&  request.requestStatus !== "rejected"?
-                                                        <>
-                                                        <button 
-                                                    onClick={async (e) => {
-                                                        // e.preventDefault();
-                                                        const response = await acceptRequest(request._id);
-                                                        if(response) console.log(response) 
-                                                    }}
-                                                        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
-                                                    >
-                                                        Accept
-                                                    </button>
-                                                    <button 
-                                                        onClick={async () => {
-                                                            const response = await rejectRequest(request._id);
-                                                            if(response) console.log(response);
-                                                        }}
-                                                        className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
-                                                    >
-                                                        Reject
-                                                    </button>
-                                                    </>
-                                                    :
-                                                    <>
-                                                    <h1 className='text-gray-800 font-medium text-sm' >Decision Already Given</h1>
-                                                    </>
+                                                        request.requestStatus !== "approved" && request.requestStatus !== "rejected" ?
+                                                            <>
+                                                                <button
+                                                                    onClick={async (e) => {
+                                                                        const response = await acceptRequest(request._id);
+
+                                                                        if (response) {
+                                                                            setRequests(prev =>
+                                                                                prev.map(r =>
+                                                                                    r._id === request._id
+                                                                                        ? { ...r, requestStatus: "approved" }
+                                                                                        : r
+                                                                                )
+                                                                            );
+                                                                        }
+
+                                                                    }}
+                                                                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                                                                >
+                                                                    Accept
+                                                                </button>
+                                                                <button
+                                                                    onClick={async () => {
+                                                                        const response = await rejectRequest(request._id);
+
+                                                                        if (response) {
+                                                                            setRequests(prev =>
+                                                                                prev.map(r =>
+                                                                                    r._id === request._id
+                                                                                        ? { ...r, requestStatus: "rejected" }
+                                                                                        : r
+                                                                                )
+                                                                            );
+                                                                        }
+
+                                                                    }}
+                                                                    className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
+                                                                >
+                                                                    Reject
+                                                                </button>
+                                                            </>
+                                                            :
+                                                            <>
+                                                                <h1 className='text-gray-800 font-medium text-sm' >Decision Already Given</h1>
+                                                            </>
                                                     }
-                                                    
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -123,13 +142,13 @@ const AllRequests = () => {
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
                             <div className="flex justify-between items-center">
                                 <div className="text-sm text-gray-600">
                                     Showing {requests.length} request{requests.length !== 1 ? 's' : ''}
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
