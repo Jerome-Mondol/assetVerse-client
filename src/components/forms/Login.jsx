@@ -36,6 +36,7 @@ const Login = () => {
             console.error(err);
         } finally {
             setIsLoading(false);
+            navigate('/')
         }
     };
 

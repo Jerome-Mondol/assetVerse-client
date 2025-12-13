@@ -14,6 +14,7 @@ import AssetDetails from "../pages/commonPages/AssetDetails";
 import AllRequests from "../pages/hrPages/AllRequests";
 import AllEmployees from "../pages/hrPages/AllEmployees";
 import EditAsset from "../pages/hrPages/EditAsset";
+import UpgradePackage from "../pages/hrPages/UpgradePackage";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,12 @@ const router = createBrowserRouter([
         path: 'employees',
         element: <HRRoutes>
           <AllEmployees />
+        </HRRoutes>
+      },
+      {
+        path: 'upgrade-package',
+        element: <HRRoutes>
+          <UpgradePackage />
         </HRRoutes>
       }
     ]

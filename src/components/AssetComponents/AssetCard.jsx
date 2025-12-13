@@ -26,7 +26,7 @@ const AssetCard = ({ assetImage, assetName, assetType, assetQuantity, id, role }
           </p>
           <div className="card-actions justify-end w-full mt-3">
             <Link 
-              to={`/edit-asset/${id}`} 
+              to={ role === 'hr' ? `/edit-asset/${id}` : `/asset-details/${id}`} 
               className="w-full"
             >
               <button className="btn btn-primary w-full text-sm sm:text-base">

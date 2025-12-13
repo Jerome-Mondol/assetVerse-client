@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../../context/AuthContext.jsx';
 import { createUserInDB } from '../../../api/authAPI.js';
 import Swal from 'sweetalert2';
@@ -12,6 +12,7 @@ const EmployeeRegister = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const { signUpWithEmailAndPassword } = useAuth();
 
@@ -45,6 +46,7 @@ const EmployeeRegister = () => {
             if (userInDB) {
                 Swal.fire('Success','Account created','success');
             }
+            navigate('/login')
         }
         catch(err) {
             console.error(err);
