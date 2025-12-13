@@ -15,6 +15,7 @@ import AllRequests from "../pages/hrPages/AllRequests";
 import AllEmployees from "../pages/hrPages/AllEmployees";
 import EditAsset from "../pages/hrPages/EditAsset";
 import UpgradePackage from "../pages/hrPages/UpgradePackage";
+import PaymentSuccess from "../pages/hrPages/StripeSucess";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
         element: <HRRoutes>
           <UpgradePackage />
         </HRRoutes>
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess
       }
     ]
   }
