@@ -10,7 +10,6 @@ const Navbar = () => {
     const { user, loading } = useAuth();
     const navigate = useNavigate();
 
-    // Fetch user role when user is authenticated
     useEffect(() => {
         const fetchUserRole = async () => {
             if (user?.email) {
@@ -48,7 +47,6 @@ const Navbar = () => {
         { title: "Join as HR Manager", path: "/join-as-hr-manager" }
     ];
 
-    // Show loading state
     if (loading) {
         return (
             <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
@@ -65,20 +63,16 @@ const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Navbar Main */}
                 <div className="flex justify-between items-center h-16">
 
-                    {/* Logo */}
                     <Link to="/" className="text-2xl font-bold text-blue-600">
                         AssetVerse
                     </Link>
 
-                    {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-6">
                         
                         {user ? (
                             <>
-                                {/* Profile Dropdown for logged-in users */}
                                 <div className="dropdown dropdown-end">
                                     <div 
                                         tabIndex={0} 
@@ -107,7 +101,6 @@ const Navbar = () => {
                                         tabIndex={0}
                                         className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-2 z-50"
                                     >
-                                        {/* Employee Links */}
                                         {role === "employee" && (
                                             <>
                                                 <li className="border-b pb-1 mb-1"><span className="text-sm text-gray-500 font-bold">EMPLOYEE</span></li>
@@ -118,7 +111,6 @@ const Navbar = () => {
                                             </>
                                         )}
 
-                                        {/* HR Manager Links */}
                                         {role === "hr" && (
                                             <>
                                                 <li className="border-b pb-1 mb-1"><span className="text-sm text-gray-500 font-bold">HR MANAGER</span></li>
@@ -131,7 +123,6 @@ const Navbar = () => {
                                             </>
                                         )}
 
-                                        {/* Common Links */}
                                         <li><Link to="/dashboard/profile" className="hover:bg-blue-50">👤 Profile</Link></li>
                                         <li><button 
                                             onClick={handleLogout} 
@@ -144,7 +135,6 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                {/* Public Navigation Links */}
                                 {navLinks.map((link) => (
                                     <Link
                                         key={link.path}

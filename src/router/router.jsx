@@ -16,6 +16,7 @@ import AllEmployees from "../pages/hrPages/AllEmployees";
 import EditAsset from "../pages/hrPages/EditAsset";
 import UpgradePackage from "../pages/hrPages/UpgradePackage";
 import PaymentSuccess from "../pages/hrPages/StripeSucess";
+import MyTeam from "../pages/employeePages/MyTeam";
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,12 @@ const router = createBrowserRouter([
       {
         path: "payment-success",
         Component: PaymentSuccess
+      },
+      {
+        path: 'my-team',
+        element: <EmployeeRoutes>
+          <MyTeam />
+        </EmployeeRoutes>
       }
     ]
   }

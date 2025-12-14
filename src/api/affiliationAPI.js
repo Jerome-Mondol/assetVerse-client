@@ -6,7 +6,6 @@ export const getAffiliations = async (hrEmail) => {
         const response = await secureAxios.get(`/affiliations/affiliation?email=${hrEmail}`);
         if(!response) return [];
         const data = response.data;
-        // support both plain array and pagination object { items, total, page }
         if (Array.isArray(data)) return data;
         if (data && Array.isArray(data.items)) return data.items;
         return [];
