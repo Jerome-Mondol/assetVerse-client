@@ -18,6 +18,7 @@ import UpgradePackage from "../pages/hrPages/UpgradePackage";
 import PaymentSuccess from "../pages/hrPages/StripeSucess";
 import MyTeam from "../pages/employeePages/MyTeam";
 import AssignAssets from "../pages/hrPages/AssignAssets";
+import NotFound from "../pages/publicPages/Error";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
         element: <HRRoutes>
           <AssignAssets />
         </HRRoutes>
+      },
+      {
+        path: "*",
+        Component: NotFound
       }
     ]
   }
