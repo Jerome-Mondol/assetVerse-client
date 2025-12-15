@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const baseURL = "https://assetverse-server-xpr1.onrender.com"
-
+// const baseURL = "https://assetverse-server-xpr1.onrender.com"
+const baseURL = "http://localhost:5000"
+  
 export const axiosInstance = axios.create({
   baseURL,
    headers: {

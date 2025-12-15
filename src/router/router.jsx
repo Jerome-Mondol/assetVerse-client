@@ -17,6 +17,7 @@ import EditAsset from "../pages/hrPages/EditAsset";
 import UpgradePackage from "../pages/hrPages/UpgradePackage";
 import PaymentSuccess from "../pages/hrPages/StripeSucess";
 import MyTeam from "../pages/employeePages/MyTeam";
+import AssignAssets from "../pages/hrPages/AssignAssets";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,12 @@ const router = createBrowserRouter([
         element: <EmployeeRoutes>
           <MyTeam />
         </EmployeeRoutes>
+      },
+      {
+        path: 'assign-assets/:employeeEmail',
+        element: <HRRoutes>
+          <AssignAssets />
+        </HRRoutes>
       }
     ]
   }

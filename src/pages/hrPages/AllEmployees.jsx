@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { getAffiliations, removeAffiliation } from '../../api/affiliationAPI'
 import { useAuth } from '../../context/AuthContext'
 import { useState } from 'react'
+import { Link } from 'react-router'
 
 const AllEmployees = () => {
     const { user } = useAuth();
@@ -68,6 +69,9 @@ const AllEmployees = () => {
                                                                 }
                                                             }}
                                                             className='btn btn-warning'>Remove Employee</button>
+
+
+                                                            <Link to={`/assign-assets/${affiliation.employeeEmail}`} ><h1 className='btn btn-success ml-2'>Assign Asset</h1></Link>
                                                     </div>
                                                 </td>
                                             </tr>

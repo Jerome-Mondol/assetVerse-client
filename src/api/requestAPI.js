@@ -27,7 +27,7 @@ export const acceptRequest = async (id) => {
     try {
         const should = await Swal.fire({
             title: 'Are you sure?',
-            text: "Accept this request?",
+            text: "Assign this asset?",
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Yes, accept',

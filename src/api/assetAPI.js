@@ -91,4 +91,27 @@ export const updateAsset = async (id, data) => {
         Swal.fire('Error','Failed to update asset','error');
         return null;
     }
+}   
+
+
+export const assignAsset = async (employeeEmail, hrEmail, assetId) => {
+
+    const data = {
+        employeeEmail,
+        hrEmail,
+        assetId
+    }
+
+    try{
+        if(data) {
+            const response = await secureAxios.post(`/assigned/assign-assets`, data)
+            Swal.fire('Success','Asset Assigned','success');
+            if(response) return response.data;
+        }
+    }
+    catch(err) {
+        console.error(err);
+        Swal.fire('Error','Failed to assign asset','error');
+        return null;
+    }
 }

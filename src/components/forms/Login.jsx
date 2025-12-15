@@ -30,13 +30,13 @@ const Login = () => {
             const userCred = await login(email, password) 
             await setJWT(email)
             
+            setIsLoading(false);
+            navigate('/')
+            window.location.reload();
             
         } catch (err) {
             setError('Login failed. Please check your credentials.');
             console.error(err);
-        } finally {
-            setIsLoading(false);
-            navigate('/')
         }
     };
 
