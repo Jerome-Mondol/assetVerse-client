@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const baseURL = "https://assetverse-server-xpr1.onrender.com"
-const baseURL = "http://localhost:5000"
+const baseURL = "https://assetverse-server-xpr1.onrender.com"
+// const baseURL = "http://localhost:5000"
   
 export const axiosInstance = axios.create({
   baseURL,
@@ -25,5 +25,3 @@ secureAxios.interceptors.request.use((config) => {
   return config;
 });
 
-
-// https://assetverse-server-xpr1.onrender.com
