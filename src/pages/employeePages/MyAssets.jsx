@@ -1,112 +1,99 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { getUser } from '../../api/userAPI';
-import { getAssetsOfEmployee } from '../../api/assetAPI';
-import { returnAssignedAsset } from '../../api/assignedAPI';
-import Swal from 'sweetalert2';
+import { getUser } from '../../api/userAPI.js';
+import { getAssetsOfEmployee } from '../../api/assetAPI.js';
 
 const MyAssets = () => {
-  const { user } = useAuth();
-
   const [assetList, setAssetList] = useState([]);
-  const [filteredAssets, setFilteredAssets] = useState([]);
+  const { user } = useAuth();
+  const [userRole, setUserRole] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('all');
+  const [filteredAssets, setFilteredAssets] = useState([]);
+  const [sortBy, setSortBy] = useState('name');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [loading, setLoading] = useState(true);
 
-  // fetch assets
   useEffect(() => {
-    if (!user) return;
-
-    const fetchAssets = async () => {
-      try {
-        const assets = await getAssetsOfEmployee(user.email);
-        setAssetList(assets || []);
-        setFilteredAssets(assets || []);
-      } catch (err) {
-        console.error(err);
-        Swal.fire('Error', 'Failed to load assets', 'error');
+    setLoading(true);
+    const fetchData = async () => {
+      if (user) {
+        try {
+          const assetResponse = await getAssetsOfEmployee(user.email);
+          if (user) {
+            const userResponse = await getUser(user.email);
+            setUserRole(userResponse.role);
+          }
+          setAssetList(assetResponse || []);
+          setFilteredAssets(assetResponse || []);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setLoading(false);
+        }
       }
     };
-
-    fetchAssets();
+    fetchData();
   }, [user]);
 
-  // return handler
-  const handleReturn = async (assignedId) => {
-    const confirm = await Swal.fire({
-      title: 'Return asset?',
-      text: 'This will return the asset to HR',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, return it',
-    });
-
-    if (!confirm.isConfirmed) return;
-
-    try {
-      await returnAssignedAsset(assignedId);
-
-      setAssetList(prev =>
-        prev.map(a =>
-          a._id === assignedId
-            ? { ...a, status: 'returned', returnDate: new Date().toISOString() }
-            : a
-        )
-      );
-
-      setFilteredAssets(prev =>
-        prev.map(a =>
-          a._id === assignedId
-            ? { ...a, status: 'returned', returnDate: new Date().toISOString() }
-            : a
-        )
-      );
-
-      Swal.fire('Success', 'Asset returned to HR', 'success');
-    } catch (err) {
-      console.error(err);
-      Swal.fire('Error', 'Failed to return asset', 'error');
-    }
-  };
-
-  // filtering
   useEffect(() => {
     let result = assetList;
 
     if (searchTerm) {
-      result = result.filter(item =>
+      result = result.filter(item => 
         item.assetName?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (filterType !== 'all') {
-      result = result.filter(item =>
+      result = result.filter(item => 
         item.assetType?.toLowerCase() === filterType.toLowerCase()
       );
     }
 
-    setFilteredAssets(result);
-  }, [searchTerm, filterType, assetList]);
+    // Sorting
+    result = [...result].sort((a, b) => {
+      let aValue, bValue;
+      if (sortBy === 'name') {
+        aValue = a.assetName?.toLowerCase() || '';
+        bValue = b.assetName?.toLowerCase() || '';
+      } else if (sortBy === 'type') {
+        aValue = a.assetType?.toLowerCase() || '';
+        bValue = b.assetType?.toLowerCase() || '';
+      } else if (sortBy === 'date') {
+        aValue = new Date(a.requestDate || a.assignmentDate);
+        bValue = new Date(b.requestDate || b.assignmentDate);
+      }
+      if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
 
-  const formatDate = (date) =>
-    date ? new Date(date).toLocaleDateString() : 'N/A';
+    setFilteredAssets(result);
+  }, [searchTerm, filterType, sortBy, sortOrder, assetList]);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 text-gray-700">
       <div className="w-[80%] mx-auto">
         <h1 className="text-3xl font-bold mb-6">My Assets</h1>
-
-        {/* Filters */}
+        
         <div className="flex gap-4 mb-6">
-          <input
-            type="text"
-            placeholder="Search asset name..."
-            className="input input-bordered w-full bg-gray-200"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-          <select
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Search asset name..."
+              className="input input-bordered w-full bg-gray-200"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <select 
             className="select select-bordered bg-gray-200"
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
@@ -115,87 +102,112 @@ const MyAssets = () => {
             <option value="returnable">Returnable</option>
             <option value="non-returnable">Non-returnable</option>
           </select>
+          <select
+            className="select select-bordered bg-gray-200"
+            value={sortBy}
+            onChange={e => setSortBy(e.target.value)}
+          >
+            <option value="name">Sort by Name</option>
+            <option value="type">Sort by Type</option>
+            <option value="date">Sort by Date</option>
+          </select>
+          <select
+            className="select select-bordered bg-gray-200"
+            value={sortOrder}
+            onChange={e => setSortOrder(e.target.value)}
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
         </div>
-
-        {/* Table */}
-        {filteredAssets.length === 0 ? (
+        
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="h-32 bg-gray-200 rounded-lg animate-pulse mb-4" />
+            ))}
+          </div>
+        ) : filteredAssets.length === 0 ? (
           <div className="bg-white p-8 rounded text-center text-gray-500">
-            No assets found
+            <p>
+              {assetList.length === 0 ? 'No assets found' : 'No matching assets'}
+            </p>
           </div>
         ) : (
-          <div className="bg-white rounded shadow overflow-x-auto">
-            <table className="table w-full">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th>Asset</th>
-                  <th>Type</th>
-                  <th>Company</th>
-                  <th>Assigned</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {filteredAssets.map((asset) => (
-                  <tr key={asset._id}>
-                    <td>
-                      <div className="flex items-center gap-3">
-                        {asset.assetImage ? (
-                          <img
-                            src={asset.assetImage}
-                            alt={asset.assetName}
-                            className="w-12 h-12 rounded"
-                          />
-                        ) : (
-                          <div className="w-12 h-12 bg-blue-100 rounded flex items-center justify-center font-bold">
-                            {asset.assetName?.charAt(0)}
-                          </div>
-                        )}
-                        <div>
-                          <div className="font-medium">{asset.assetName}</div>
-                          <div className="text-xs text-gray-500">
-                            {asset._id.slice(0, 8)}...
+          <div className="bg-white rounded shadow overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="table w-full">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="py-3 px-4 text-left">Asset</th>
+                    <th className="py-3 px-4 text-left">Type</th>
+                    <th className="py-3 px-4 text-left">Company</th>
+                    <th className="py-3 px-4 text-left">Request Date</th>
+                    <th className="py-3 px-4 text-left">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredAssets.map((asset, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      <td className="py-4 px-4">
+                        <div className="flex items-center gap-3">
+                          {asset.assetImage ? (
+                            <div className="avatar">
+                              <div className="rounded-lg w-12 h-12">
+                                <img src={asset.assetImage} alt={asset.assetName} />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <span className="text-blue-600 font-bold">
+                                {asset.assetName?.charAt(0) || 'A'}
+                              </span>
+                            </div>
+                          )}
+                          <div>
+                            <div className="font-medium">{asset.assetName}</div>
+                            <div className="text-sm text-gray-500">
+                              ID: {asset._id?.substring(0, 8)}...
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <span className={`badge ${
-                        asset.assetType === 'returnable'
-                          ? 'badge-success'
-                          : 'badge-warning'
-                      }`}>
-                        {asset.assetType}
-                      </span>
-                    </td>
-
-                    <td>{asset.companyName}</td>
-
-                    <td>{formatDate(asset.assignmentDate)}</td>
-
-                    <td>
-                      {asset.assetType === 'returnable' ||
-                      asset.status === 'assigned' ? (
-                        <button
-                          className="btn btn-error btn-sm"
-                          onClick={() => handleReturn(asset._id)}
-                        >
-                          Return
-                        </button>
-                      ) : (
-                        <span className="badge badge-info">
-                          {asset.status}
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className={`badge ${
+                          asset.assetType?.toLowerCase() === 'returnable' 
+                            ? 'badge-success' 
+                            : 'badge-warning'
+                        }`}>
+                          {asset.assetType || 'Unknown'}
                         </span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <div className="p-4 text-sm text-gray-500">
-              Showing {filteredAssets.length} of {assetList.length}
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="font-medium">{asset.companyName}</div>
+                      </td>
+                      <td className="py-4 px-4">
+                        {formatDate(asset.requestDate || asset.assignmentDate)}
+                      </td>
+                      <td className="py-4 px-4">
+                        {asset.assetType?.toLowerCase() === 'returnable' && 
+                         asset.status?.toLowerCase() === 'assigned' ? (
+                          <button className="btn btn-error btn-sm">
+                            Return
+                          </button>
+                        ) : (
+                          <span className="badge badge-info">
+                            {asset.status || 'Assigned'}
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="p-4 bg-gray-50 border-t">
+              <p className="text-sm text-gray-600">
+                Showing {filteredAssets.length} of {assetList.length} assets
+              </p>
             </div>
           </div>
         )}

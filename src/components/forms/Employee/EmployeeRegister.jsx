@@ -12,6 +12,9 @@ const EmployeeRegister = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const { signUpWithEmailAndPassword } = useAuth();
@@ -19,18 +22,22 @@ const EmployeeRegister = () => {
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        setError("");
+        setSuccess("");
+        setLoading(true);
+
         // Simple validation
         if (!name || !email || !dob || !password) {
-            Swal.fire('Error','Please fill in all fields','error');
+            setError("Please fill in all fields");
+            setLoading(false);
             return;
         }
         
         if (password !== confirmPassword) {
-            Swal.fire('Error','Passwords do not match','error');
+            setError("Passwords do not match");
+            setLoading(false);
             return;
         }
-        
 
         try {
             const userCredentials = await signUpWithEmailAndPassword(email, password);
@@ -44,13 +51,14 @@ const EmployeeRegister = () => {
 
             const userInDB = await createUserInDB(employeeData);
             if (userInDB) {
-                Swal.fire('Success','Account created','success');
+                setSuccess("Account created successfully");
             }
-            navigate('/login')
+            setTimeout(() => navigate('/login'), 1200);
         }
         catch(err) {
-            console.error(err);
-            Swal.fire('Error','Registration failed','error');
+            setError("Registration failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -68,6 +76,8 @@ const EmployeeRegister = () => {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                     <form onSubmit={handleSubmit} className="space-y-6">
+                        {error && <div className="text-red-600 text-sm font-semibold">{error}</div>}
+                        {success && <div className="text-green-600 text-sm font-semibold">{success}</div>}
                         
                         {/* Name Field */}
                         <div>
@@ -196,9 +206,10 @@ const EmployeeRegister = () => {
                         <div>
                             <button
                                 type="submit"
+                                disabled={loading}
                                 className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             >
-                                Create Employee Account
+                                {loading ? "Creating..." : "Create Employee Account"}
                             </button>
                         </div>
                     </form>

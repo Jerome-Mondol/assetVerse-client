@@ -12,6 +12,9 @@ const HRRegister = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -19,14 +22,19 @@ const HRRegister = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+        setSuccess("");
+        setLoading(true);
 
         if (!name || !companyName || !companyLogo || !email || !dob || !password) {
-            alert("Please fill in all fields.");
+            setError("Please fill in all fields.");
+            setLoading(false);
             return;
         }
 
         if (password !== confirmPassword) {
-            alert("Passwords do not match.");
+            setError("Passwords do not match.");
+            setLoading(false);
             return;
         }
 
@@ -34,24 +42,27 @@ const HRRegister = () => {
             const userCredentials = await signUpWithEmailAndPassword(email, password);
 
             if(userCredentials) {
+                const hrData = {
+                    name,
+                    companyName,
+                    companyLogo,
+                    email,
+                    dateOfBirth: dob,
+                    firebaseUID: userCredentials.uid,
+                };
 
-            const hrData = {
-                name,
-                companyName,
-                companyLogo,
-                email,
-                dateOfBirth: dob,
-                firebaseUID: userCredentials.uid,
-            };
-
-            const createdHR = await createHRInDB(hrData);
-            console.log(createdHR);
+                const createdHR = await createHRInDB(hrData);
+                if (createdHR) {
+                    setSuccess("Account created successfully");
+                }
+                setTimeout(() => navigate('/login'), 1200);
             }
-
-            navigate('/login')
         }
         catch (err) {
-            console.log(err);
+            setError("Registration failed");
+        }
+        finally {
+            setLoading(false);
         }
     };
 
@@ -69,6 +80,8 @@ const HRRegister = () => {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                     <form onSubmit={handleSubmit} className="space-y-6">
+                        {error && <div className="text-red-600 text-sm font-semibold">{error}</div>}
+                        {success && <div className="text-green-600 text-sm font-semibold">{success}</div>}
 
                         {/* Name */}
                         <div>
@@ -184,9 +197,10 @@ const HRRegister = () => {
                         {/* Submit */}
                         <button
                             type="submit"
+                            disabled={loading}
                             className="w-full py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                         >
-                            Create HR Account
+                            {loading ? "Creating..." : "Create HR Account"}
                         </button>
                     </form>
 

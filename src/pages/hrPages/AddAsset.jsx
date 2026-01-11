@@ -81,14 +81,16 @@ const AddAsset = () => {
       <p>Total Assets: {assetCount ?? "..."}</p>
 
       <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+        {loading && <div className="text-blue-600 font-semibold">Adding asset...</div>}
+
         <div>
           <label>Product Name *</label>
-          <input name="productName" value={formData.productName} onChange={handleChange} className="w-full p-2 border rounded" />
+          <input name="productName" value={formData.productName} onChange={handleChange} className="w-full p-2 border rounded" required />
         </div>
 
         <div>
           <label>Type *</label>
-          <select name="productType" value={formData.productType} onChange={handleChange} className="w-full p-2 border rounded">
+          <select name="productType" value={formData.productType} onChange={handleChange} className="w-full p-2 border rounded" required>
             <option value="">Select</option>
             {productTypes.map((t) => (
               <option key={t}>{t}</option>
@@ -98,7 +100,7 @@ const AddAsset = () => {
 
         <div>
           <label>Quantity *</label>
-          <input type="number" name="productQuantity" min={1} value={formData.productQuantity} onChange={handleChange} className="w-full p-2 border rounded" />
+          <input type="number" name="productQuantity" min={1} value={formData.productQuantity} onChange={handleChange} className="w-full p-2 border rounded" required />
         </div>
 
         <div>

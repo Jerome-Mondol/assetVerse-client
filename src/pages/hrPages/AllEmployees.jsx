@@ -48,42 +48,44 @@ const AllEmployees = () => {
                                     </tr>
                                 </thead>
                                 <tbody >
-                                    {
-                                        affiliations &&
-                                        affiliations.map((affiliation, index) => (
-                                            affiliation.status !== 'inactive' &&
-                                            <tr key={index} >
-                                                <th>{index + 1}</th>
-                                                <td className='font-medium' >{affiliation.employeeName}</td>
-                                                <td>{affiliation.employeeEmail}</td>
-                                                <td>
-                                                    <div>
-                                                        <button
-                                                            onClick={async (e) => {
-                                                                const response = await removeAffiliation(affiliation._id);
-
-                                                                if (response) {
-                                                                    setAffiliations(prev =>
-                                                                        prev.filter(a => a._id !== affiliation._id)
-                                                                    );
-                                                                }
-                                                            }}
-                                                            className='btn btn-warning'>Remove Employee</button>
-
-
-                                                            <Link to={`/assign-assets/${affiliation.employeeEmail}`} ><h1 className='btn btn-success ml-2'>Assign Asset</h1></Link>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    }
+                                    {affiliations && affiliations.length === 0 && (
+                                        <tr>
+                                            <td colSpan="4" className="text-center py-8 text-gray-500 font-semibold">No employees found</td>
+                                        </tr>
+                                    )}
+                                    {affiliations && affiliations.map((affiliation, index) => (
+                                        affiliation.status !== 'inactive' &&
+                                        <tr key={index} >
+                                            <th>{index + 1}</th>
+                                            <td className='font-medium' >{affiliation.employeeName}</td>
+                                            <td>{affiliation.employeeEmail}</td>
+                                            <td>
+                                                <div>
+                                                    <button
+                                                        onClick={async (e) => {
+                                                            const response = await removeAffiliation(affiliation._id);
+                                                            if (response) {
+                                                                setAffiliations(prev =>
+                                                                    prev.filter(a => a._id !== affiliation._id)
+                                                                );
+                                                            }
+                                                        }}
+                                                        className='btn btn-warning'>Remove Employee</button>
+                                                    <Link to={`/assign-assets/${affiliation.employeeEmail}`} ><h1 className='btn btn-success ml-2'>Assign Asset</h1></Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
                     </div> :
-                    <div>Loading..</div>
+                    <div className="grid grid-cols-2 gap-4 w-[60%] mx-auto mt-10">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                            <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse" />
+                        ))}
+                    </div>
             }
-
         </>
     )
 }

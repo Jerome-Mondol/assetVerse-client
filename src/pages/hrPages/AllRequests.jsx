@@ -32,12 +32,14 @@ const AllRequests = () => {
                 <h1 className='text-3xl font-bold text-gray-800 mb-8'>All Requests</h1>
 
                 {loading ? (
-                    <div className="flex justify-center items-center h-64">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                    <div className="grid grid-cols-2 gap-4 w-full mt-10">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                            <div key={i} className="h-16 bg-gray-200 rounded-lg animate-pulse" />
+                        ))}
                     </div>
                 ) : requests.length === 0 ? (
                     <div className="text-center py-12 bg-white rounded-lg shadow">
-                        <p className="text-gray-500 text-lg">No requests found</p>
+                        <p className="text-gray-500 text-lg font-semibold">No requests found</p>
                     </div>
                 ) : (
                     <div className="bg-white rounded-xl shadow-md overflow-hidden">

@@ -19,6 +19,17 @@ import PaymentSuccess from "../pages/hrPages/StripeSucess";
 import MyTeam from "../pages/employeePages/MyTeam";
 import AssignAssets from "../pages/hrPages/AssignAssets";
 import NotFound from "../pages/publicPages/Error";
+import About from '../pages/publicPages/About';
+import Contact from '../pages/publicPages/Contact';
+import Privacy from '../pages/publicPages/Privacy';
+import Terms from '../pages/publicPages/Terms';
+import Cookies from '../pages/publicPages/Cookies';
+import Careers from '../pages/publicPages/Careers';
+import Security from '../pages/publicPages/Security';
+import FeaturesPage from '../pages/publicPages/Features';
+import PricingPage from '../pages/publicPages/Pricing';
+import Profile from '../pages/commonPages/Profile';
+import Dashboard from "../pages/hrPages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +51,12 @@ const router = createBrowserRouter([
       {
         path: 'login',
         Component: Login
+      },
+      {
+        path: 'dashboard',
+        element: <HRRoutes>
+          <Dashboard />
+        </HRRoutes>
       },
       {
         path: 'assets-list',
@@ -110,6 +127,52 @@ const router = createBrowserRouter([
         element: <HRRoutes>
           <AssignAssets />
         </HRRoutes>
+      },
+      {
+        path: 'about',
+        Component: About
+      },
+      {
+        path: 'contact',
+        Component: Contact
+      },
+      {
+        path: 'privacy',
+        Component: Privacy
+      },
+      {
+        path: 'terms',
+        Component: Terms
+      },
+      {
+        path: 'cookies',
+        Component: Cookies
+      },
+      {
+        path: 'careers',
+        Component: Careers
+      },
+      {
+        path: 'security',
+        Component: Security
+      },
+      {
+        path: 'features',
+        Component: FeaturesPage
+      },
+      {
+        path: 'pricing',
+        Component: PricingPage
+      },
+      {
+        path: 'dashboard/profile',
+        element: <HRRoutes>
+          <Profile />
+        </HRRoutes>
+      },
+      {
+        path: 'profile',
+        Component: Profile
       },
       {
         path: "*",

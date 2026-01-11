@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { getUser } from '../api/userAPI';
 import { Navigate } from 'react-router';
 import { setJWT } from '../api/authAPI';
+import HRLayout from './layouts/HRLayout';
 
 const HRRoutes = ({ children }) => {
   const { user, loading } = useAuth();
@@ -43,7 +44,7 @@ const HRRoutes = ({ children }) => {
 
   if (loading || allowed === null || checkingToken) return null;
 
-  return allowed && localStorage.getItem('token') ? children : <Navigate to="/login" />;
+  return allowed && localStorage.getItem('token') ? <HRLayout>{children}</HRLayout> : <Navigate to="/login" />;
 };
 
 export default HRRoutes;

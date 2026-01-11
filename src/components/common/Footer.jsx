@@ -5,7 +5,7 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-gray-900 text-white">
+        <footer className="bg-white border-t border-gray-200 text-gray-700">
             <div className="max-w-6xl mx-auto px-4 py-12">
                 <div className="grid md:grid-cols-4 gap-8 mb-8">
                     <div>
@@ -13,6 +13,11 @@ const Footer = () => {
                         <p className="text-gray-400 text-sm">
                             Enterprise asset management for modern organizations.
                         </p>
+                        <div className="flex gap-4 mt-4">
+                            <a href="https://twitter.com/assetverse" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-blue-500 hover:underline">Twitter</a>
+                            <a href="https://linkedin.com/company/assetverse" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-blue-700 hover:underline">LinkedIn</a>
+                            <a href="https://facebook.com/assetverse" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-blue-600 hover:underline">Facebook</a>
+                        </div>
                     </div>
                     <div>
                         <h4 className="font-semibold mb-4">Product</h4>
@@ -46,7 +51,7 @@ const Footer = () => {
                             © {currentYear} AssetVerse Inc.
                         </div>
                         <div className="text-gray-500 text-sm">
-                            123 Business Street • New York, NY 10001
+                            <a href="mailto:support@assetverse.com" className="hover:underline">support@assetverse.com</a> &bull; <a href="tel:+1234567890" className="hover:underline">+1 (234) 567-890</a> &bull; 123 Business Street, New York, NY 10001
                         </div>
                     </div>
                 </div>
