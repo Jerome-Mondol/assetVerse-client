@@ -1,14 +1,14 @@
 import axios from 'axios'
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://assetverse-server-xpr1.onrender.com',
    headers: {
         "Content-Type": "application/json",
     },
 });
 
 export const secureAxios = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://assetverse-server-xpr1.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
